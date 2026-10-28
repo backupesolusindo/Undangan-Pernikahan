@@ -1,0 +1,11 @@
+{
+  "name": "undangan-wedding-project",
+  "version": "1.0.0",
+  "description": "Undangan Digital Pernikahan (React + CodeIgniter 4)",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "./scripts/build_cpanel.sh",
+    "deploy": "./deploy.sh",
+    "upload": "./deploy.sh"
+  }
+}
