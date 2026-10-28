@@ -7,9 +7,9 @@ export default function Story({ stories }) {
   if (!stories || stories.length === 0) return null;
 
   return (
-    <section className="py-24 px-4 relative overflow-hidden" style={{background: '#d9beb4'}}>
+    <section className="py-24 px-4 relative overflow-hidden" style={{ background: '#d9beb4' }}>
       <div className="max-w-4xl mx-auto space-y-16 relative z-10">
-        
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -35,9 +35,8 @@ export default function Story({ stories }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: idx * 0.15 }}
-              className={`relative pl-8 md:pl-0 flex flex-col md:flex-row items-start ${
-                idx % 2 === 0 ? 'md:flex-row-reverse' : ''
-              }`}
+              className={`relative pl-8 md:pl-0 flex flex-col md:flex-row items-start ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''
+                }`}
             >
               {/* Timeline Bullet Dot */}
               <div className="absolute -left-[17px] top-0 w-8 h-8 rounded-full bg-[#2A170D] border-2 border-[#F8ECE6]/90 flex items-center justify-center shadow-md">
