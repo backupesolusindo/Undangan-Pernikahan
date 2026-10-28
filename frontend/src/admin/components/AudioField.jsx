@@ -1,28 +1,38 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Upload, Trash2, Music } from 'lucide-react';
+import { Upload, Trash2, Music, Globe, Sparkles } from 'lucide-react';
 import { resolveAdminImage } from '../api';
 
 const ACCEPT = 'audio/mpeg,audio/mp3,audio/wav,audio/x-wav,audio/ogg,audio/mp4,audio/x-m4a';
 const MAX_SIZE = 20 * 1024 * 1024; // 20MB
+export const DEFAULT_GIT_AUDIO = 'https://cdn.jsdelivr.net/gh/backupesolusindo/Undangan-Pernikahan@main/frontend/public/assets/wedding_music.mp3';
 
-function humanSize(bytes) {
+export function humanSize(bytes) {
     return bytes >= 1048576
         ? `${(bytes / 1048576).toFixed(1)}MB`
         : `${Math.round(bytes / 1024)}KB`;
 }
 
 /**
- * Field upload audio untuk halaman pengaturan.
- * Preview langsung dengan pemutar audio HTML sebelum diunggah.
+ * Field audio fleksibel: mendukung URL langsung (CDN/Git/Cloud) & upload berkas lokal.
  */
-export default function AudioField({ label, hint, value, file, onFileChange, onClear }) {
+export default function AudioField({
+    label,
+    hint,
+    value,
+    file,
+    onFileChange,
+    onUrlChange,
+    onClear,
+}) {
     const inputRef = useRef(null);
     const [objectUrl, setObjectUrl] = useState(null);
     const [fileError, setFileError] = useState('');
 
-    // Buat object URL untuk preview sebelum upload
     useEffect(() => {
-        if (!file) { setObjectUrl(null); return; }
+        if (!file) {
+            setObjectUrl(null);
+            return undefined;
+        }
         const url = URL.createObjectURL(file);
         setObjectUrl(url);
         return () => URL.revokeObjectURL(url);
@@ -33,6 +43,7 @@ export default function AudioField({ label, hint, value, file, onFileChange, onC
         setFileError('');
         e.target.value = '';
         if (!picked) return;
+
         if (picked.size > MAX_SIZE) {
             setFileError(`Ukuran ${humanSize(picked.size)} melebihi batas 20MB.`);
             return;
@@ -46,17 +57,37 @@ export default function AudioField({ label, hint, value, file, onFileChange, onC
         onClear();
     };
 
+    const handleUseGitCdn = () => {
+        setFileError('');
+        onFileChange(null);
+        if (onUrlChange) {
+            onUrlChange(DEFAULT_GIT_AUDIO);
+        }
+    };
+
     const src = objectUrl || (value ? resolveAdminImage(value) : '');
 
     return (
-        <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-300">{label}</label>
+        <div className="space-y-2">
+            <div className="flex items-center justify-between">
+                <label className="text-xs font-medium text-slate-300">{label}</label>
+                <button
+                    type="button"
+                    onClick={handleUseGitCdn}
+                    title="Gunakan audio bawaan via CDN GitHub jsDelivr (bebas limit server)"
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-[10px] font-medium transition-colors cursor-pointer"
+                >
+                    <Sparkles className="w-3 h-3 text-amber-400" />
+                    <span>Pakai CDN Git (Cepat)</span>
+                </button>
+            </div>
 
             <div className="rounded-xl border border-slate-800 bg-slate-900 overflow-hidden">
-                {/* Preview area */}
+                {/* Audio preview area */}
                 <div className="h-20 bg-slate-950 flex items-center justify-center px-4">
                     {src ? (
                         <audio
+                            key={src}
                             src={src}
                             controls
                             preload="metadata"
@@ -70,27 +101,41 @@ export default function AudioField({ label, hint, value, file, onFileChange, onC
                     )}
                 </div>
 
-                {/* Action buttons */}
-                <div className="p-2.5 flex items-center gap-2">
-                    <button
-                        type="button"
-                        onClick={() => inputRef.current?.click()}
-                        className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-medium transition-colors cursor-pointer"
-                    >
-                        <Upload className="w-3.5 h-3.5" />
-                        <span>{file ? 'Ganti audio' : 'Pilih audio'}</span>
-                    </button>
+                {/* Input URL Direct Link */}
+                <div className="p-3 space-y-2.5 bg-slate-900/90 border-t border-slate-800">
+                    <div className="flex items-center gap-2">
+                        <div className="relative flex-1">
+                            <Globe className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                            <input
+                                type="text"
+                                value={file ? `[Berkas lokal: ${file.name}]` : (value || '')}
+                                disabled={Boolean(file)}
+                                onChange={(e) => onUrlChange && onUrlChange(e.target.value)}
+                                placeholder="https://cdn.jsdelivr.net/... atau uploads/..."
+                                className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 focus:border-amber-500 text-slate-200 text-xs focus:outline-none transition-colors disabled:opacity-50"
+                            />
+                        </div>
 
-                    {(file || value) && (
                         <button
                             type="button"
-                            onClick={handleRemove}
-                            title="Hapus audio"
-                            className="px-3 py-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-[11px] font-medium transition-colors cursor-pointer"
+                            onClick={() => inputRef.current?.click()}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-colors cursor-pointer shrink-0"
                         >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>{file ? 'Ganti' : 'Pilih Berkas'}</span>
                         </button>
-                    )}
+
+                        {(file || value) && (
+                            <button
+                                type="button"
+                                onClick={handleRemove}
+                                title="Hapus audio"
+                                className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-xs transition-colors cursor-pointer shrink-0"
+                            >
+                                <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -107,7 +152,11 @@ export default function AudioField({ label, hint, value, file, onFileChange, onC
                     <span className="text-amber-400">
                         {file.name} ({humanSize(file.size)}) — belum tersimpan, tekan Simpan.
                     </span>
-                ) : hint}
+                ) : (
+                    <span>
+                        {hint} Disarankan menggunakan link <strong>CDN Git / Cloud</strong> agar musik diputar mulus tanpa jeda buffer server.
+                    </span>
+                )}
             </p>
 
             {fileError && <p className="text-[10px] text-rose-400">{fileError}</p>}

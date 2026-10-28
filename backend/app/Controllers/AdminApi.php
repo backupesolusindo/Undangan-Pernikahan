@@ -408,7 +408,7 @@ class AdminApi extends BaseController
 
         // Foto sampul & frame diunggah sebagai berkas terpisah, bukan field teks.
         foreach (self::SETTING_FILE_FIELDS as $settingKey => $fileField) {
-            $path = $this->handleUpload($fileField, $current[$settingKey] ?? null);
+            $path = $this->handleUpload($fileField, null);
 
             if ($this->isUploadError($path)) {
                 return $this->failValidationErrors(

@@ -382,6 +382,7 @@ export default function SettingsPage() {
             value={settings.video_url || ''}
             file={files.video_url}
             onFileChange={(file) => handleFileChange('video_url', file)}
+            onUrlChange={(url) => handleChange('video_url', url)}
             onClear={() => handleMediaClear('video_url')}
           />
 
@@ -391,6 +392,7 @@ export default function SettingsPage() {
             value={settings.audio_url || ''}
             file={files.audio_url}
             onFileChange={(file) => handleFileChange('audio_url', file)}
+            onUrlChange={(url) => handleChange('audio_url', url)}
             onClear={() => handleMediaClear('audio_url')}
           />
 

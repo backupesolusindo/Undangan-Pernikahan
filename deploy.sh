@@ -31,7 +31,12 @@ echo "✅ Frontend berhasil di-compile ke frontend/dist!"
 echo ""
 echo "🚀 [Langkah 2/2] Mengunggah Frontend & Backend ke Server FTP..."
 cd "$ROOT_DIR"
-python3 "$ROOT_DIR/scripts/deploy.py"
+
+if [ ! -d "node_modules/basic-ftp" ]; then
+    npm install basic-ftp --save-dev
+fi
+
+node "$ROOT_DIR/scripts/deploy.js"
 
 echo ""
 echo "🎉 Build dan Upload selesai dengan sukses!"

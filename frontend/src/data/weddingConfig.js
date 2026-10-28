@@ -17,10 +17,10 @@ export const weddingConfig = {
   },
   eventDate: "2026-09-30T08:00:00+07:00",
   eventDateFormatted: "Minggu, 30 September 2026",
-  audioUrl: "/assets/wedding_music.mp3",
+  audioUrl: "https://cdn.jsdelivr.net/gh/backupesolusindo/Undangan-Pernikahan@main/frontend/public/assets/wedding_music.mp3",
   heroImage: "/assets/hero_cover.jpg",
   heroFullscreenImage: "/assets/videoframe_17420.png",
-  videoUrl: "/assets/opening_video2.mp4",
+  videoUrl: "https://cdn.jsdelivr.net/gh/backupesolusindo/Undangan-Pernikahan@main/frontend/public/assets/opening_video2.mp4",
   quote: {
     text: "Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga pernikahan ini keberkahan bagi kami, keluarga kami, dan keturunan kami di dunia & akhirat.",
     source: "QS. Ar-Rum: 21"

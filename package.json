@@ -8,5 +8,8 @@
     "deploy": "./deploy.sh",
     "deploy:win": "deploy.bat",
     "upload": "./deploy.sh"
+  },
+  "devDependencies": {
+    "basic-ftp": "^6.2.3"
   }
 }

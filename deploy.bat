@@ -55,18 +55,30 @@ echo.
 echo [Langkah 2/2] Mengunggah Frontend ^& Backend ke Server FTP...
 cd /d "%ROOT_DIR%"
 
-REM Deteksi python atau py launcher
-where python >nul 2>nul
+REM Cek apakah basic-ftp sudah terinstall di root
+if not exist "node_modules\basic-ftp" (
+    echo [INFO] Menyiapkan modul FTP Node.js...
+    call npm install basic-ftp --save-dev
+)
+
+REM Jalankan deploy berbasis Node.js (tanpa butuh Python)
+where node >nul 2>nul
 if %errorlevel% equ 0 (
-    python "%ROOT_DIR%scripts\deploy.py"
+    call node "%ROOT_DIR%scripts\deploy.js"
 ) else (
-    where py >nul 2>nul
+    REM Fallback ke Python jika node tidak terdeteksi
+    where python >nul 2>nul
     if %errorlevel% equ 0 (
-        py "%ROOT_DIR%scripts\deploy.py"
+        python "%ROOT_DIR%scripts\deploy.py"
     ) else (
-        echo [ERROR] Python tidak ditemukan di sistem! Pastikan Python terinstall dan terdaftar di PATH.
-        pause
-        exit /b 1
+        where py >nul 2>nul
+        if %errorlevel% equ 0 (
+            py "%ROOT_DIR%scripts\deploy.py"
+        ) else (
+            echo [ERROR] Node.js atau Python tidak ditemukan di sistem!
+            pause
+            exit /b 1
+        )
     )
 )
 
