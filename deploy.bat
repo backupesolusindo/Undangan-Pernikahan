@@ -14,18 +14,38 @@ echo  MEMULAI BUILD ^& DEPLOY KE SERVER CPANEL (WINDOWS)
 echo  Root: %ROOT_DIR%
 echo ========================================================
 
-REM 1. COMPILE FRONTEND DENGAN VITE
+REM 1. PERIKSA & COMPILE FRONTEND DENGAN VITE
 echo.
-echo [Langkah 1/2] Meng-compile Frontend React...
+echo [Langkah 1/2] Menyiapkan dan meng-compile Frontend React...
 cd /d "%ROOT_DIR%frontend"
 
+REM Cek apakah node_modules dan vite.cmd sudah tersedia di Windows
+if not exist "node_modules\.bin\vite.cmd" (
+    echo.
+    echo [INFO] Dependencies frontend belum terinstall untuk Windows.
+    echo [INFO] Menjalankan npm install di folder frontend...
+    call npm install
+    if !errorlevel! neq 0 (
+        echo.
+        echo [ERROR] Gagal menjalankan npm install! Pastikan Node.js terinstall.
+        cd /d "%ROOT_DIR%"
+        pause
+        exit /b !errorlevel!
+    )
+)
+
+echo [INFO] Menjalankan vite build...
 call npm run build
 if %errorlevel% neq 0 (
-    echo.
-    echo [ERROR] Gagal meng-compile Frontend React!
-    cd /d "%ROOT_DIR%"
-    pause
-    exit /b %errorlevel%
+    echo [INFO] Mencoba build via npx vite build...
+    call npx vite build
+    if !errorlevel! neq 0 (
+        echo.
+        echo [ERROR] Gagal meng-compile Frontend React!
+        cd /d "%ROOT_DIR%"
+        pause
+        exit /b !errorlevel!
+    )
 )
 
 echo [OK] Frontend berhasil di-compile ke frontend\dist!
