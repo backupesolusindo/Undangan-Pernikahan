@@ -22,7 +22,7 @@ Desktop.ini
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
-.vscode/sftp.json
+!.vscode/sftp.json
 .idea/
 *.sublime-project
 *.sublime-workspace
