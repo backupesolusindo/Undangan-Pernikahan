@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Lora', serif;
+    background-color: #120905;
+    color: #ebdcc8;
+  }
+  
+  h1, h2, h3, .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+
+  .font-pinyon {
+    font-family: 'Pinyon Script', cursive;
+  }
+
+  .font-cormorant {
+    font-family: 'Cormorant Infant', serif;
+  }
+}
+
+/* Custom Scrollbar Javanese Gold */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #120905;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4af37;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f5d77f;
+}
+
+/* Golden Gradient Text */
+.gold-text {
+  background: linear-gradient(135deg, #fff3c4 0%, #d4af37 50%, #997415 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Javanese Carved Wooden Glass Card */
+.jawa-card {
+  background: rgba(30, 17, 10, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* Light card for higher contrast (cream tone) */
+.jawa-card-light {
+  background: rgba(235, 220, 200, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+
+.jawa-card-gold {
+  background: linear-gradient(145deg, rgba(41, 23, 13, 0.9), rgba(18, 9, 5, 0.95));
+  border: 2px solid #d4af37;
+  box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.15), 0 12px 35px rgba(0, 0, 0, 0.8);
+}
+
+/* Ornate Border Frame */
+.jawa-border-frame {
+  position: relative;
+}
+.jawa-border-frame::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  pointer-events: none;
+}
