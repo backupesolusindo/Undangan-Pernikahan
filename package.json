@@ -6,6 +6,7 @@
     "dev": "cd frontend && npm run dev",
     "build": "./scripts/build_cpanel.sh",
     "deploy": "./deploy.sh",
+    "deploy:win": "deploy.bat",
     "upload": "./deploy.sh"
   }
 }
