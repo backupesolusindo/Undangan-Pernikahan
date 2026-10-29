@@ -126,6 +126,12 @@ async function main() {
     const localBackendApp = path.join(BACKEND_DIR, "app");
     const appCount = await uploadTree(client, localBackendApp, "/backend/app");
 
+    // Upload .env ke server
+    const localEnv = path.join(BACKEND_DIR, ".env");
+    if (fs.existsSync(localEnv)) {
+      await uploadSingleFile(client, localEnv, "/backend/.env");
+    }
+
     // Upload uploads & .htaccess jika ada
     const localUploads = path.join(BACKEND_DIR, "public", "uploads");
     if (fs.existsSync(localUploads)) {
