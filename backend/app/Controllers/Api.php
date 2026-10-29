@@ -63,18 +63,16 @@ class Api extends BaseController
             if (empty($json)) {
                 $json = (object) [
                     'name'        => $this->request->getPost('name'),
-                    'phone'       => $this->request->getPost('phone'),
                     'status'      => $this->request->getPost('status'),
                     'guest_count' => $this->request->getPost('guest_count'),
                     'message'     => $this->request->getPost('message'),
                 ];
             }
 
-            if (! empty($json->name) && ! empty($json->phone) && ! empty($json->status) && isset($json->guest_count)) {
+            if (! empty($json->name) && ! empty($json->status) && isset($json->guest_count)) {
                 try {
                     $this->guestModel->save([
                         'name'        => $json->name,
-                        'phone'       => $json->phone,
                         'status'      => $json->status,
                         'guest_count' => (int) $json->guest_count,
                         'message'     => $json->message ?? '',
