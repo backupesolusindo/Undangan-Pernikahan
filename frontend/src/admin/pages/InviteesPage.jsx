@@ -21,6 +21,7 @@ export default function InviteesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [coupleNames, setCoupleNames] = useState('Mempelai');
   const [copiedId, setCopiedId] = useState(null);
 
   // Modal State
@@ -49,8 +50,24 @@ export default function InviteesPage() {
     }
   };
 
+  // Fetch wedding settings for couple names
+  const fetchSettings = async () => {
+    try {
+      const res = await apiGet('/api/admin/settings');
+      if (res?.data) {
+        const { groom_nickname, bride_nickname } = res.data;
+        if (groom_nickname || bride_nickname) {
+          setCoupleNames(`${bride_nickname || ''} & ${groom_nickname || ''}`.trim());
+        }
+      }
+    } catch {
+      // silently ignore; fallback to default
+    }
+  };
+
   useEffect(() => {
     fetchInvitees();
+    fetchSettings();
   }, []);
 
   const openAddModal = () => {
@@ -142,7 +159,7 @@ Bapak/Ibu/Saudara/i: *${item.name}*
 
 Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:
 
-*Juwita & Seno*
+*${coupleNames}*
 
 Untuk informasi lengkap mengenai acara dan konfirmasi kehadiran, silakan buka tautan undangan digital berikut:
 ${link}
@@ -150,7 +167,7 @@ ${link}
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
 
 Terima kasih.
-_Juwita & Seno_`;
+_${coupleNames}_`;
 
     const encoded = encodeURIComponent(message);
     const url = phone
@@ -307,11 +324,10 @@ _Juwita & Seno_`;
                           <button
                             onClick={() => copyLink(item.id, url)}
                             title="Salin Tautan"
-                            className={`p-1.5 rounded-lg border transition-all cursor-pointer ${
-                              isCopied
-                                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
-                                : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
-                            }`}
+                            className={`p-1.5 rounded-lg border transition-all cursor-pointer ${isCopied
+                              ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                              : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
+                              }`}
                           >
                             {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                           </button>
