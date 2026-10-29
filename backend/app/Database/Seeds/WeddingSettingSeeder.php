@@ -28,8 +28,8 @@ class WeddingSettingSeeder extends Seeder
 
             'event_date' => '2026-09-30T08:00:00+07:00',
             'event_date_formatted' => 'Minggu, 30 September 2026',
-            'audio_url' => '/assets/wedding_music.mp3',
-            'video_url' => '/assets/opening_video2.mp4',
+            'audio_url' => 'https://cdn.jsdelivr.net/gh/backupesolusindo/Undangan-Pernikahan@main/frontend/public/assets/wedding_music.mp3',
+            'video_url' => 'https://cdn.jsdelivr.net/gh/backupesolusindo/Undangan-Pernikahan@main/frontend/public/assets/opening_video2.mp4',
             'hero_image' => '/assets/hero_cover.jpg',
             'hero_fullscreen_image' => '/assets/videoframe_17420.png',
 

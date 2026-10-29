@@ -216,6 +216,9 @@ cp "$ROOT_DIR/backend/.env.production" "$METODE_2/public_html/.env"
 cp "$ROOT_DIR/backend/database_setup_complete.sql" "$METODE_2/public_html/database_setup_complete.sql"
 [ -f "$ROOT_DIR/backend/spark" ] && cp "$ROOT_DIR/backend/spark" "$METODE_2/public_html/"
 
+# Server menolak berkas audio/video; media ini disajikan dari Git via CDN jsDelivr.
+find "$DIST_DIR" -type f \( -iname '*.mp3' -o -iname '*.wav' -o -iname '*.m4a' -o -iname '*.ogg' -o -iname '*.mp4' -o -iname '*.webm' -o -iname '*.mov' \) -delete
+
 # index.php untuk Metode 2 (app ada di folder yang sama)
 cat << 'EOF' > "$METODE_2/public_html/index.php"
 <?php

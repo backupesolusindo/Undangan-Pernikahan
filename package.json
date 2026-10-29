@@ -7,7 +7,8 @@
     "build": "./scripts/build_cpanel.sh",
     "deploy": "./deploy.sh",
     "deploy:win": "deploy.bat",
-    "upload": "./deploy.sh"
+    "upload": "./deploy.sh",
+    "media": "node scripts/media-cdn.js"
   },
   "devDependencies": {
     "basic-ftp": "^6.2.3"

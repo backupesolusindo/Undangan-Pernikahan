@@ -8,6 +8,9 @@ const FRONTEND_DIR = path.join(ROOT_DIR, "frontend");
 const FRONTEND_DIST = path.join(FRONTEND_DIR, "dist");
 const BACKEND_DIR = path.join(ROOT_DIR, "backend");
 
+// Server menolak berkas audio/video; media ini disajikan dari Git via CDN jsDelivr.
+const MEDIA_EXT = new Set([".mp3", ".wav", ".m4a", ".ogg", ".mp4", ".webm", ".mov"]);
+
 function loadFtpConfig() {
   if (!fs.existsSync(SFTP_CONFIG_FILE)) {
     console.error(`❌ Error: File ${SFTP_CONFIG_FILE} tidak ditemukan!`);
@@ -38,6 +41,10 @@ async function uploadTree(client, localDir, remoteBaseDir) {
     for (const item of items) {
       const name = item.name;
       if (name.startsWith(".DS_Store") || name === "node_modules" || name === ".git" || name === "tests") {
+        continue;
+      }
+      if (MEDIA_EXT.has(path.extname(name).toLowerCase())) {
+        console.log(`  [-] Lewati media (pakai CDN Git): ${name}`);
         continue;
       }
       const itemLocal = path.join(currentLocal, name);
