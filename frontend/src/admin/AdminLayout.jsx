@@ -114,18 +114,16 @@ export default function AdminLayout({ children }) {
                 key={item.path}
                 to={item.path}
                 end={item.exact}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
-                  active
-                    ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-                }`}
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${active
+                  ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  }`}
               >
                 <Icon className={`w-4 h-4 ${active ? 'text-slate-950' : 'text-slate-400'}`} />
                 <span className="flex-1">{item.name}</span>
                 {item.badge && (
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${
-                    active ? 'bg-slate-950/20 text-slate-950' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                  }`}>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${active ? 'bg-slate-950/20 text-slate-950' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                    }`}>
                     {item.badge}
                   </span>
                 )}
@@ -201,18 +199,16 @@ export default function AdminLayout({ children }) {
                     to={item.path}
                     end={item.exact}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
-                      active
-                        ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
-                        : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-                    }`}
+                    className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${active
+                      ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                      }`}
                   >
                     <Icon className={`w-4 h-4 ${active ? 'text-slate-950' : 'text-slate-400'}`} />
                     <span className="flex-1">{item.name}</span>
                     {item.badge && (
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${
-                        active ? 'bg-slate-950/20 text-slate-950' : 'bg-amber-500/10 text-amber-400'
-                      }`}>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${active ? 'bg-slate-950/20 text-slate-950' : 'bg-amber-500/10 text-amber-400'
+                        }`}>
                         {item.badge}
                       </span>
                     )}
@@ -259,7 +255,7 @@ export default function AdminLayout({ children }) {
               <Menu className="w-5 h-5" />
             </button>
             <div className="hidden sm:block">
-              <span className="text-xs text-slate-400">Pernikahan Juwita & Seno</span>
+              <span className="text-xs text-slate-400">Pernikahan Dimas & Devi</span>
               <span className="mx-2 text-slate-600">•</span>
               <span className="text-xs text-emerald-400 font-medium">Sistem Aktif</span>
             </div>
