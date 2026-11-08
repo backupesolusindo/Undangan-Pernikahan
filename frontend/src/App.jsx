@@ -208,10 +208,10 @@ export default function App() {
 
   // Title tab mengikuti nama pasangan dari database (bukan hardcode di index.html)
   useEffect(() => {
-    if (!settings) return;
-
-    const bride = settings.bride_nickname || settings.bride_name || '';
-    const groom = settings.groom_nickname || settings.groom_name || '';
+    const bride = settings?.bride_nickname || settings?.bride_name
+      || weddingConfig.bride.nickname || weddingConfig.bride.name || '';
+    const groom = settings?.groom_nickname || settings?.groom_name
+      || weddingConfig.groom.nickname || weddingConfig.groom.name || '';
 
     if (bride || groom) {
       document.title = `The Wedding of ${bride} & ${groom}`;

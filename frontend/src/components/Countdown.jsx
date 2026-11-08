@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { CalendarCheck } from 'lucide-react';
 
 export default function Countdown({ targetDate, config }) {
-  const brideName = config?.bride?.nickname || 'Juwita';
-  const groomName = config?.groom?.nickname || 'Seno';
+  const brideName = config?.bride?.nickname || config?.bride?.name || '';
+  const groomName = config?.groom?.nickname || config?.groom?.name || '';
 
   const calculateTimeLeft = () => {
     const difference = +new Date(targetDate) - +new Date();

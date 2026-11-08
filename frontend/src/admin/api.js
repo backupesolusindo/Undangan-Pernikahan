@@ -57,7 +57,7 @@ export async function apiRequest(path, options = {}) {
     response = await fetch(url, options);
   } catch (networkErr) {
     console.error('Network error:', networkErr);
-    throw new Error('Tidak dapat terhubung ke server. Pastikan backend berjalan di localhost:8080.');
+    throw new Error('Tidak dapat terhubung ke server.');
   }
 
   if (response.status === 401) {

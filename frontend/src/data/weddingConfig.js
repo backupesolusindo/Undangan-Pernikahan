@@ -1,20 +1,24 @@
+const bride = {
+  name: "Devi Aryaning Tyas, A.Md.Kom.",
+  nickname: "Devi",
+  father: "Bpk. Riyanto",
+  mother: "Ibu Siti Julaeha",
+  photo: "/assets/bride.jpg",
+  instagram: "@deviaryaningt",
+};
+
+const groom = {
+  name: "Dimas Ainur Fanani, A.Md.T.",
+  nickname: "Dimas",
+  father: "Bpk. Edy Suyanti",
+  mother: "Ibu Siti Badriyah",
+  photo: "/assets/groom.jpg",
+  instagram: "@dimasainur_",
+};
+
 export const weddingConfig = {
-  groom: {
-    name: "Raden Seno Wijaya, S.T.",
-    nickname: "Seno",
-    father: "Bpk. H. Bambang Wijayanto",
-    mother: "Ibu Hj. Sri Rahayu",
-    photo: "/assets/groom.jpg",
-    instagram: "@seno_wijaya",
-  },
-  bride: {
-    name: "Juwita Sukma, S.Pd.",
-    nickname: "Juwita",
-    father: "Bpk. Bastian Edy (Alm)",
-    mother: "Ibu Romadona Noverina",
-    photo: "/assets/bride.jpg",
-    instagram: "@juwita_sukma",
-  },
+  bride,
+  groom,
   eventDate: "2026-09-30T08:00:00+07:00",
   eventDateFormatted: "Minggu, 30 September 2026",
   audioUrl: "https://cdn.jsdelivr.net/gh/backupesolusindo/Undangan-Pernikahan@main/frontend/public/assets/wedding_music.mp3",
@@ -68,7 +72,7 @@ export const weddingConfig = {
     },
     {
       url: "/assets/gallery2.jpg",
-      caption: "Moments Juwita & Seno"
+      caption: `Moments ${bride.nickname} & ${groom.nickname}`
     },
     {
       url: "/assets/gallery3.jpg",
@@ -91,18 +95,18 @@ export const weddingConfig = {
     {
       bankName: "Bank BCA",
       accountNumber: "8830192841",
-      accountName: "Juwita Sukma",
+      accountName: bride.name,
       icon: "/assets/bca_logo.svg"
     },
     {
       bankName: "Bank Mandiri",
       accountNumber: "1380092104812",
-      accountName: "Raden Seno Wijaya",
+      accountName: groom.name,
       icon: "/assets/mandiri_logo.svg"
     }
   ],
   gift: {
-    name: "Juwita & Seno",
+    name: `${bride.nickname} & ${groom.nickname}`,
     address: "Kediaman Mempelai, Jl. Joglo Karanganyar No. 88, Surakarta, Jawa Tengah"
   }
 };
