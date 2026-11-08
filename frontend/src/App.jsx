@@ -36,11 +36,15 @@ export default function App() {
   };
 
   // Dynamic state initialized with cache or static fallback
-  const [settings, setSettings] = useState(getCachedSettings());
+  const cachedSettings = getCachedSettings();
+  const [settings, setSettings] = useState(cachedSettings);
   const [gallery, setGallery] = useState(weddingConfig.gallery);
   const [stories, setStories] = useState(weddingConfig.stories);
   const [couple, setCouple] = useState({ bride: weddingConfig.bride, groom: weddingConfig.groom });
   const [events, setEvents] = useState(null);
+
+  // configReady: true immediately if cache exists, otherwise wait for API
+  const [configReady, setConfigReady] = useState(!!cachedSettings);
 
   useEffect(() => {
     let cancelled = false;
@@ -63,6 +67,9 @@ export default function App() {
           // ignore storage errors
         }
       }
+
+      // Mark config as ready after first API response (covers the no-cache case)
+      setConfigReady(true);
 
       if (Array.isArray(g) && g.length > 0) {
         setGallery(g.map((it) => ({ url: resolveImage(it.url || it.image), caption: it.caption || '' })));
@@ -207,7 +214,7 @@ export default function App() {
     const groom = settings.groom_nickname || settings.groom_name || '';
 
     if (bride || groom) {
-      document.title = `The Wedding of ${bride} & ${groom} | Undangan Pernikahan Adat Jawa`;
+      document.title = `The Wedding of ${bride} & ${groom}`;
     }
   }, [settings]);
 
@@ -220,34 +227,41 @@ export default function App() {
         className={`w-full max-w-[420px] min-h-screen mx-auto bg-jawa-dark shadow-[0_0_40px_rgba(0,0,0,0.3)] relative z-10 ${!isOpen ? 'h-screen overflow-hidden' : ''}`}
       >
 
-        {/* Cover / Opening Card */}
-        <Opening
-          config={liveConfig}
-          isOpen={isOpen}
-          onOpen={handleOpenInvitation}
-          frameRef={frameRef}
-          onVideoActive={setVideoActive}
-        />
+        {/* Block render until config is ready — prevents flash of default names/images */}
+        {!configReady ? (
+          <div className="fixed inset-0 z-50 bg-black" />
+        ) : (
+          <>
+            {/* Cover / Opening Card */}
+            <Opening
+              config={liveConfig}
+              isOpen={isOpen}
+              onOpen={handleOpenInvitation}
+              frameRef={frameRef}
+              onVideoActive={setVideoActive}
+            />
 
-        {/* Floating Audio Player */}
-        <AudioPlayer
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          audioUrl={liveConfig.audioUrl}
-        />
+            {/* Floating Audio Player */}
+            <AudioPlayer
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+              audioUrl={liveConfig.audioUrl}
+            />
 
-        {/* Main Invitation Content */}
-        <main className={`transition-opacity duration-700 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <Hero config={liveConfig} videoActive={videoActive} />
-          <Couple config={liveConfig} />
-          <Countdown targetDate={liveConfig.eventDate} config={liveConfig} />
-          <EventDetail config={liveConfig} events={events} />
-          <Story stories={stories} />
-          <Gallery gallery={gallery} />
-          <Gift banks={liveConfig.banks} gift={liveConfig.gift} config={liveConfig} />
-          <RSVP />
-          <Footer config={liveConfig} />
-        </main>
+            {/* Main Invitation Content */}
+            <main className={`transition-opacity duration-700 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+              <Hero config={liveConfig} videoActive={videoActive} />
+              <Couple config={liveConfig} />
+              <Countdown targetDate={liveConfig.eventDate} config={liveConfig} />
+              <EventDetail config={liveConfig} events={events} />
+              <Story stories={stories} />
+              <Gallery gallery={gallery} />
+              <Gift banks={liveConfig.banks} gift={liveConfig.gift} config={liveConfig} />
+              <RSVP />
+              <Footer config={liveConfig} />
+            </main>
+          </>
+        )}
       </div>
 
     </div>
